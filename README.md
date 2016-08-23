@@ -17,12 +17,7 @@ Hail Mary Pass (Passing)
 The player may throw the ball to any square on the playing pitch, no
 matter what the range: the range ruler is not used. Roll a D6. On a
 roll of 1 the player fumbles the throw, and the ball will bounce once
-from the thrower’s square. On a roll of 2-6, the player may make the
-pass. The Hail Mary pass may not be intercepted, but it is never
-accurate – the ball automatically misses and scatters three squares.
-Note that if you are lucky, the ball will scatter back into the target
-square! This skill may not be used in a Blizzard or with the Throw
-Team-Mate skill.
+...
 ~~~
 
 or tell it to limit the search to skills/inducements, rosters or star players only:
