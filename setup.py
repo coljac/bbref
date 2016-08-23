@@ -15,5 +15,13 @@ setup(
         entry_points='''
         [console_scripts]
         bbref=bbref:cli
-        '''
+        ''',
+        # metadata for upload to PyPI
+        author = "Colin Jacobs",
+        author_email = "colin@coljac.net",
+        description = "Command line tool for checking Blood Bowl rules",
+        license = "Public Domain",
+        keywords = "blood bowl, command-line",
+        url = "https://github.com/coljac/bbref",
+
      )

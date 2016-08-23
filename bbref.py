@@ -95,7 +95,7 @@ def search_sp(con, searchterm, deepsearch):
     table.set_deco(Texttable.HEADER)
 
     table.set_deco(Texttable.HEADER)
-    table.set_cols_width([25, 18, 4, 2, 2, 2, 2, 25])
+    table.set_cols_width([25, 18, 5, 2, 2, 2, 2, 25])
     table.add_rows(out)
     if len(rows) > 0:
         click.echo(table.draw() + "\n")
