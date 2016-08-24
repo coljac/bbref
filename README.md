@@ -53,7 +53,7 @@ Options:
 
 ## Demo
 
-![asciicast](https://asciinema.org/a/38j3soawiltsugsr3zxvdnemx.png)](https://asciinema.org/a/38j3soawiltsugsr3zxvdnemx)
+[![asciicast](https://asciinema.org/a/38j3soawiltsugsr3zxvdnemx.png)](https://asciinema.org/a/38j3soawiltsugsr3zxvdnemx)
 
 ## Installation
 
