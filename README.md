@@ -51,6 +51,10 @@ Options:
   --help            Show this message and exit.
 ~~~
 
+## Demo
+
+![asciicast](https://asciinema.org/a/38j3soawiltsugsr3zxvdnemx.png)](https://asciinema.org/a/38j3soawiltsugsr3zxvdnemx)
+
 ## Installation
 
 `python setup.py install`
