@@ -78,9 +78,9 @@ def search_roster(con, searchterm, deepsearch, return_rows=False):
     for row in rows:
         out.append([row[0], row[2], row[1], 
             str(row[5]) if row[5] else "",
-            str(row[6]) if row[5] else "",
-            str(row[6]) if row[5] else "",
-            str(row[6]) if row[5] else "",
+            str(row[6]) if row[6] else "",
+            str(row[7]) if row[7] else "",
+            str(row[8]) if row[8] else "",
             row[3], row[4],
             row[9], row[10]])
     table = Texttable()
