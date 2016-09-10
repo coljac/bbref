@@ -26,11 +26,16 @@ def cli(searchterm, deepsearch, roster, star, skill):
     search_db(searchterm, searchall=searchall, skill=skill, roster=roster, star=star,
             deepsearch=deepsearch)
 
-def search_rules(con, searchterm, deepsearch):
+def search_rules(con, searchterm, deepsearch, return_rows=False, exact=False):
     cur = con.cursor()
     like = '%' + searchterm + '%'
     bindings = [like]
     sql = "SELECT * FROM rules where name like ?"
+
+    if exact:
+        sql = "SELECT * FROM rules WHERE name = ? COLLATE NOCASE"
+        bindings = [searchterm]
+
     # sql = "SELECT * FROM rules where name like '%" + searchterm + "%'"
     if deepsearch:
         sql += " or rules like ?"
@@ -40,14 +45,23 @@ def search_rules(con, searchterm, deepsearch):
     
     rows = cur.fetchall()
     wrap = tw.TextWrapper(width=80)
-    for row in rows:
-        header = "%s (%s)" % (row[0], row[3])
-        click.echo(header)
-        click.echo("-" * len(header))
-        click.echo(tw.fill(row[1]))
-        click.echo()
+    output = ""
+    if return_rows:
+        return rows
 
-def search_roster(con, searchterm, deepsearch):
+    for row in rows:
+        if len(row[3]) > 0:
+            header = "%s (%s)" % (row[0], row[3])
+        else:
+            header = row[0]
+        output += header + "\n"
+        output += "-" * len(header) + "\n"
+        output += tw.fill(row[1])
+        output += "\n"
+
+    return output
+
+def search_roster(con, searchterm, deepsearch, return_rows=False):
     cur = con.cursor()
     like = '%' + searchterm + '%'
     bindings = [like, like]
@@ -58,6 +72,8 @@ def search_roster(con, searchterm, deepsearch):
 
     cur.execute(sql, bindings)
     rows = cur.fetchall()
+    if return_rows:
+        return rows
     wrap = tw.TextWrapper(width=80)
 
     headers = ['Race', '#', 'Position', 'MV', 'ST', 'AG', 'AV', 'Cost', 'Skills', 'Norm', 'Dbles']
@@ -72,9 +88,12 @@ def search_roster(con, searchterm, deepsearch):
     table.add_rows(out)
 
     if len(rows) > 0:
-        click.echo(table.draw() + "\n")
+        return table.draw() + "\n"
 
-def search_sp(con, searchterm, deepsearch):
+    return ""
+        # click.echo(table.draw() + "\n")
+
+def search_sp(con, searchterm, deepsearch, return_rows=False):
     cur = con.cursor()
     like = '%' + searchterm + '%'
     bindings = [like, like]
@@ -85,6 +104,10 @@ def search_sp(con, searchterm, deepsearch):
 
     cur.execute(sql, bindings)
     rows = cur.fetchall()
+
+    if return_rows:
+        return rows
+
     wrap = tw.TextWrapper(width=80)
 
     headers = ['Name', 'Races', 'Price', 'MA', 'ST', 'AG', 'AV', 'Skills']
@@ -97,8 +120,11 @@ def search_sp(con, searchterm, deepsearch):
     table.set_deco(Texttable.HEADER)
     table.set_cols_width([25, 18, 5, 2, 2, 2, 2, 25])
     table.add_rows(out)
+
+
     if len(rows) > 0:
-        click.echo(table.draw() + "\n")
+        return table.draw() + "\n"
+    return ""
 
 def search_db(searchterm, blobtype=None, searchall=True, deepsearch=False, 
         roster=False, star=False, skill=False):
@@ -111,9 +137,12 @@ def search_db(searchterm, blobtype=None, searchall=True, deepsearch=False,
         cur = con.cursor()  
 
         if searchall or skill:
-            search_rules(con, searchterm, deepsearch)
+            click.echo(search_rules(con, searchterm, deepsearch))
         if searchall or roster:
-            search_roster(con, searchterm, deepsearch)
+            click.echo(search_roster(con, searchterm, deepsearch))
         if searchall or star:
-            search_sp(con, searchterm, deepsearch)
+            click.echo(search_sp(con, searchterm, deepsearch))
 
+def get_connection():
+    datafile = pkg_resources.resource_filename(__name__, "crp") + "/crp.db"
+    return lite.connect(datafile)
