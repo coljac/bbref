@@ -50,11 +50,14 @@ def search_rules(con, searchterm, deepsearch, return_rows=False, exact=False):
         return rows
 
     for row in rows:
-        header = "%s (%s)" % (row[0], row[3])
+        if len(row[3]) > 0:
+            header = "%s (%s)" % (row[0], row[3])
+        else:
+            header = row[0]
         output += header + "\n"
         output += "-" * len(header) + "\n"
         output += tw.fill(row[1])
-        output += "\n"
+        output += "\n\n"
 
     return output
 
