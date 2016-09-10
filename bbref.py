@@ -57,7 +57,7 @@ def search_rules(con, searchterm, deepsearch, return_rows=False, exact=False):
         output += header + "\n"
         output += "-" * len(header) + "\n"
         output += tw.fill(row[1])
-        output += "\n"
+        output += "\n\n"
 
     return output
 
@@ -79,7 +79,12 @@ def search_roster(con, searchterm, deepsearch, return_rows=False):
     headers = ['Race', '#', 'Position', 'MV', 'ST', 'AG', 'AV', 'Cost', 'Skills', 'Norm', 'Dbles']
     out = [headers]
     for row in rows:
-        out.append([row[0], row[2], row[1], row[5], row[6], row[7], row[8], row[3], row[4],
+        out.append([row[0], row[2], row[1], 
+            str(row[5]) if row[5] else "",
+            str(row[6]) if row[6] else "",
+            str(row[7]) if row[7] else "",
+            str(row[8]) if row[8] else "",
+            row[3], row[4],
             row[9], row[10]])
     table = Texttable()
     table.set_deco(Texttable.HEADER)
